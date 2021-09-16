@@ -31,6 +31,7 @@ class BERTJointModel(nn.Module):
         sequence_output, _ = self.bert(input_ids=input_ids, token_type_ids=token_type_ids, \
             attention_mask=attention_mask, return_dict=False, output_attentions=False)
 
+        # 打印attention时用
         # encode_dict = self.bert(input_ids=input_ids, token_type_ids=token_type_ids, \
         #     attention_mask=attention_mask, return_dict=True, output_attentions=True)
         # sequence_output = encode_dict["last_hidden_state"]

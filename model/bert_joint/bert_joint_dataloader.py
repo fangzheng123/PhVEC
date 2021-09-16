@@ -195,7 +195,7 @@ class BERTJointDataLoader(object):
         else:
             batch_size = self.args.eval_batch_size
         
-        # 打印数据结果
+        # 打印数据结果(小批量数据测试观察使用，大数据别打印！！)
         # if is_train:
         #     detect_inputs = self.bert_tokenizer.batch_decode(dataset["detect_input_ids"], skip_special_tokens=True)
         #     correct_inputs = self.bert_tokenizer.batch_decode(dataset["correct_input_ids"], skip_special_tokens=True)

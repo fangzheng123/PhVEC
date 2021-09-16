@@ -29,7 +29,7 @@ TEST_DATA_PATH=$FORMAT_DATA_DIR/magic_test.txt
 PINYIN_TOKEN_PATH="/ssd1/users/fangzheng/data/mt_error/source_data/dict/zh_cidian/pinyin_token.txt"
 
 # 日志
-LOG_FILE=$LOG_DIR/test_compare_complete_pinyin_log.txt
+LOG_FILE=$LOG_DIR/train_compare_complete_pinyin_log.txt
 
 # 使用DDP, 16GB显存不够无法启动
 # /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib \
@@ -38,8 +38,8 @@ LOG_FILE=$LOG_DIR/test_compare_complete_pinyin_log.txt
 # max_input_len=48
 nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
 /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-/ssd1/users/fangzheng/anaconda3/bin/python -u run_model/run_pinyin_compare.py \
-  --do_eval \
+/ssd1/users/fangzheng/anaconda3/bin/python -u run_model/run_complete_pinyin.py \
+  --do_train \
   --pretrain_model_path=$PRE_TRAINED_MODEL_DIR \
   --output_dir=$FINE_TUNING_MODEL_DIR \
   --model_save_path=$FINETUNE_MODEL_PATH \
@@ -59,6 +59,5 @@ nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
   --learning_rate=5e-5 \
   --weight_decay=0.01 \
   --warmup_ratio=0.1 \
-  --num_beams=1 \
   --seed=42 \
   > $LOG_FILE 2>&1 &

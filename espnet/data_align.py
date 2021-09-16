@@ -65,9 +65,9 @@ class DataAlign(object):
 if __name__ == "__main__":
     asr_dir = "/ssd1/users/fangzheng/data/asr_data/magic_data/asr/test"
     transcript_data_path = "/ssd1/users/fangzheng/data/asr_data/magic_data/transcript/test_trans.txt"
-    format_data_path = "/ssd1/users/fangzheng/data/mt_error/asr_format/magic_format/test_single_format.txt"
+    asr_format_data_path = "/ssd1/users/fangzheng/data/mt_error/asr_format/magic_format/test_single_format.txt"
     
     data_align = DataAlign()
-    data_align.align_asr_transcript(asr_dir, transcript_data_path, format_data_path, "magic")
+    data_align.align_asr_transcript(asr_dir, transcript_data_path, asr_format_data_path, "magic")
     
 

@@ -221,8 +221,8 @@ class PseudoDataFormat(object):
                     correct_input_text += error_char + " " + " ".join(error_pinyin_list[char_index]) + " "
                 correct_input_text += label_text[end_index:]
 
-                # correct_label_list = self.get_filter_correct_label_list(error_word, error_pinyin_list, source_word, label_pinyin_list)
-                correct_label_list = self.get_correct_label_list(error_word, error_pinyin_list, source_word, label_pinyin_list)
+                correct_label_list = self.get_filter_correct_label_list(error_word, error_pinyin_list, source_word, label_pinyin_list)
+                # correct_label_list = self.get_correct_label_list(error_word, error_pinyin_list, source_word, label_pinyin_list)
                 correct_label_text = label_text[:start_index] + " ".join(correct_label_list) + " "
                 correct_label_text += label_text[end_index:]
                 # if len(source_word) != len(error_word):

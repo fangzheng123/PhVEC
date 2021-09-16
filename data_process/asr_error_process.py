@@ -21,7 +21,7 @@ from util.file_util import FileUtil
 from util.log_util import LogUtil
 from util.text_util import TextUtil
 
-class ErrorProcess(object):
+class ASRErrorProcess(object):
     """
     ASR错误处理
     """
@@ -79,7 +79,6 @@ class ErrorProcess(object):
                 error_num_dict[diff_len] = error_num_dict.get(diff_len, 0) + 1
                 s = SequenceMatcher(None, asr_sent, transcript)
                     
-                # print(asr_sent, "####", transcript)
                 for tag, i1, i2, j1, j2 in s.get_opcodes():
                     if tag != "equal":
                         asr_word, transcript_word = asr_sent[i1:i2], transcript[j1:j2]
@@ -92,36 +91,24 @@ class ErrorProcess(object):
                         tag_num_dict[tag] = tag_num_dict.get(tag, 0) + 1
                         if tag == "replace":
                             error_word_dict.setdefault(transcript_word, []).append(asr_word)
-                            
                             replace_diff = len(asr_word) - len(transcript_word)
                             replace_num_dict[replace_diff] = replace_num_dict.get(replace_diff, 0) + 1
                             replace_len_dict[len(transcript_word)] = replace_len_dict.get(len(transcript_word), 0) + 1
-                        
-                        # print(tag, asr_word, transcript_word, asr_pinyin, transcript_pinyin)
-                # print("")
+                                
+        # print("replace diff len ratio:", {diff_len: num/sum(replace_num_dict.values()) for diff_len, num in replace_num_dict.items()})
+        # print("replace len ratio:", {word_len: num/sum(replace_len_dict.values()) for word_len, num in replace_len_dict.items()})
+        # print({tag: num/sum(tag_num_dict.values()) for tag, num in tag_num_dict.items()})
+        # print("pinyin same ratio:", phonetic_same_num/(phonetic_same_num+phonetic_diff_num))
+        # print({k: v/sum(error_num_dict.values()) for k, v in error_num_dict.items()})
+        # print("error sent num: {0}, error sent ratio: {1}".format(error_sent_num, error_sent_num/len(data_obj_list)))
         
-        print("replace diff len ratio:", {diff_len: num/sum(replace_num_dict.values()) for diff_len, num in replace_num_dict.items()})
-        print("replace len ratio:", {word_len: num/sum(replace_len_dict.values()) for word_len, num in replace_len_dict.items()})
-        print({tag: num/sum(tag_num_dict.values()) for tag, num in tag_num_dict.items()})
-        print("pinyin same ratio:", phonetic_same_num/(phonetic_same_num+phonetic_diff_num))
-        print({k: v/sum(error_num_dict.values()) for k, v in error_num_dict.items()})
-        print("error sent num: {0}, error sent ratio: {1}".format(error_sent_num, error_sent_num/len(data_obj_list)))
         # 计算CER
         cer = ASRScoreUtil.calculate_cer([ele["asr"] for ele in data_obj_list], [ele["transcript"] for ele in data_obj_list])
         print("CER is {0:.2f}%".format(cer*100))
 
         # 存储错误平行对
-        # error_word_align_list = [{"label": label, "confusion": error_list, "source": source_type} for label, error_list in error_word_dict.items()]
-        # FileUtil.write_json_in_append(error_word_align_list, error_align_path)
-    
-    def filter_symbol(self, text):
-        """
-        过滤标点符号
-        @param:
-        @return:
-        """
-        new_text = re.sub("[、,.，。？！!\-《》：“”\'\"]", "", text.strip())
-        return new_text
+        error_word_align_list = [{"label": label, "confusion": error_list, "source": source_type} for label, error_list in error_word_dict.items()]
+        FileUtil.write_json_in_append(error_word_align_list, error_align_path)
 
     def filter_error_pair(self, error_align_path, error_filter_path):
         """
@@ -135,7 +122,7 @@ class ErrorProcess(object):
         filter_label_dict = {}
         for error_obj in error_obj_list:
             label = error_obj["label"]
-            label = self.filter_symbol(label)
+            label = TextUtil.filter_symbol(label)
             # 忽略长度大于4的词
             if len(label) > 4 or len(label) == 0:
                 continue
@@ -145,7 +132,7 @@ class ErrorProcess(object):
             word_counter = Counter(confusion_list)
             filter_word_list = []
             for word, num in word_counter.items():
-                word = self.filter_symbol(word)
+                word = TextUtil.filter_symbol(word)
                 if len(word) == 0 or abs(len(word)-len(label)) > 2 or word.lower() == label.lower():
                     continue
                 word_pinyin = "".join(lazy_pinyin(word))
@@ -161,18 +148,19 @@ class ErrorProcess(object):
         FileUtil.write_raw_data(filter_label_list, error_filter_path)
 
 if __name__ == "__main__":
-    error_process = ErrorProcess()
+    error_process = ASRErrorProcess()
 
-    data_name = "bstc"
+    data_name = "aishell"
     base_dir = "/ssd1/users/fangzheng/data/mt_error/"
     format_data_path = base_dir + "asr_format/" + data_name + "_format/train_single_format.txt"
     # format_filter_path = base_dir + "asr_format/" + data_name + "_format/test_single_format_filter.txt"
     
-    error_align_path = "/ssd1/users/fangzheng/data/mt_error/source_data/dict/asr_error_align_bstc.txt"
-    error_filter_path = "/ssd1/users/fangzheng/data/mt_error/source_data/dict/asr_error_align_bstc_filter.txt"
+    error_align_path = "/ssd1/users/fangzheng/data/mt_error/source_data/dict/asr_error_align.txt"
+    error_filter_path = "/ssd1/users/fangzheng/data/mt_error/source_data/dict/asr_error_align_filter.txt"
 
     # 过滤部分magic的数据
     # error_process.filter_asr_data(format_data_path, format_filter_path)
+    
     error_process.asr_error_analyse(format_data_path, error_align_path, data_name)
-    # error_process.filter_error_pair(error_align_path, error_filter_path)
+    error_process.filter_error_pair(error_align_path, error_filter_path)
 

@@ -22,12 +22,12 @@ mkdir -p $LOG_DIR
 ####################用户需提供的数据#####################
 # 模型训练、验证、测试文件
 FORMAT_DATA_DIR=$ROOT_DIR/correct_format
-TRAIN_DATA_PATH=$FORMAT_DATA_DIR/pseudo_train_bstc_same_length.txt
-DEV_DATA_PATH=$FORMAT_DATA_DIR/bstc_test_format.txt
-TEST_DATA_PATH=$FORMAT_DATA_DIR/aishell_test_variable.txt
+TRAIN_DATA_PATH=$FORMAT_DATA_DIR/pseudo_train_same_length.txt
+DEV_DATA_PATH=$FORMAT_DATA_DIR/aishell_dev.txt
+TEST_DATA_PATH=$FORMAT_DATA_DIR/aishell_test.txt
 
 # 日志
-LOG_FILE=$LOG_DIR/test_single_bert_ctc_log.txt
+LOG_FILE=$LOG_DIR/train_single_bert_log.txt
 
 # 使用DDP, 16GB显存不够无法启动
 # /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib \
@@ -36,8 +36,7 @@ LOG_FILE=$LOG_DIR/test_single_bert_ctc_log.txt
 nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
 /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
 /ssd1/users/fangzheng/anaconda3/bin/python -u run_model/run_bert_single_correction.py \
-  --do_eval \
-  --do_ctc \
+  --do_train \
   --pretrain_model_path=$PRE_TRAINED_MODEL_DIR \
   --output_dir=$FINE_TUNING_MODEL_DIR \
   --model_save_path=$FINETUNE_MODEL_PATH \
@@ -56,6 +55,5 @@ nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
   --learning_rate=5e-5 \
   --weight_decay=0.01 \
   --warmup_ratio=0.1 \
-  --num_beams=1 \
   --seed=42 \
   > $LOG_FILE 2>&1 &

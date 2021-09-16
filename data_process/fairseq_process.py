@@ -137,11 +137,12 @@ if __name__ == "__main__":
     pretrain_dir = "/ssd1/users/fangzheng/data/mt_error/pretrain_model/BERT-wwm-ext"
 
     source_path = root_dir + "correct_format/bstc_dev_format.txt"
+    # 使用fairseq中翻译模型，相当于源语言为zh, 目标语言为en
     asr_path = root_dir + "fairseq_bstc_format/test.zh"
     transcript_path = root_dir + "fairseq_bstc_format/test.en"
 
     fair_process = FairseqProcess()
-    # fair_process.format_data(source_path, pretrain_dir, asr_path, transcript_path, is_bstc=True)
+    fair_process.format_data(source_path, pretrain_dir, asr_path, transcript_path, is_bstc=False)
     # fair_process.get_cer_result("/ssd1/users/fangzheng/project/MTError/log/fairseq_levt_transformer_test_log2.txt", is_variable=True)
         
 

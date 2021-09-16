@@ -26,7 +26,6 @@ class PseudoPinyinTokenFormat(object):
     """
     伪训练语料格式化
     """
-
     def generate_complete_token_train_data(self, train_data_path, train_replace_error_path, train_format_path):
         """
         新增完整token

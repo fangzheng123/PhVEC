@@ -24,7 +24,6 @@ class BaseArguments(Seq2SeqTrainingArguments):
     require_improvement: int = field(default=100)
     eval_batch_step: int = field(default=1000)
     ignore_pad_token_for_loss: bool = field(default=True)
-    # train_batch_size: int = field(default=2)
     max_input_len: int = field(default=40)
     max_output_len: int = field(default=32) 
     num_beams: int = field(default=1)
@@ -40,7 +39,7 @@ class BARTArguments(BaseArguments):
 @dataclass
 class TransformerArguments(BaseArguments):
     """
-    Transformer模型参数
+    自定义Transformer模型参数
     """
     pretrain_model_path: Optional[str] = field(default=None)
     emb_size: int = field(default=512) 
@@ -71,7 +70,7 @@ class BERTArguments(BaseArguments):
 @dataclass
 class BERTPipelineArguments(BERTArguments):
     """
-    BERT模型参数
+    BERT Pipeline模型参数
     """
     do_detect: bool = field(default=False)
     do_correct: bool = field(default=False)

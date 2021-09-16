@@ -13,7 +13,6 @@ class ModelUtil(object):
     """
     模型工具类
     """
-
     @classmethod
     def load_model(cls, model, model_save_path, device):
         """

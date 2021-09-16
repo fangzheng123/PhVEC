@@ -22,12 +22,12 @@ mkdir -p $LOG_DIR
 ####################用户需提供的数据#####################
 # 模型训练、验证、测试文件
 FORMAT_DATA_DIR=$ROOT_DIR/correct_format
-TRAIN_DATA_PATH=$FORMAT_DATA_DIR/pseudo_correct_train_format.txt
+TRAIN_DATA_PATH=$FORMAT_DATA_DIR/pseudo_joint_train_format.txt
 DEV_DATA_PATH=$FORMAT_DATA_DIR/correct_dev.txt
 TEST_DATA_PATH=$FORMAT_DATA_DIR/aishell_dev.txt
 
 # 日志
-LOG_FILE=$LOG_DIR/predict_pipeline_log1.txt
+LOG_FILE=$LOG_DIR/train_pipeline_log1.txt
 
 # 使用DDP, 16GB显存不够无法启动
 # /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib \
@@ -36,7 +36,7 @@ LOG_FILE=$LOG_DIR/predict_pipeline_log1.txt
 nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
 /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
 /ssd1/users/fangzheng/anaconda3/bin/python -u run_model/run_bert_pipeline_correction.py \
-  --do_predict \
+  --do_train \
   --pretrain_model_path=$PRE_TRAINED_MODEL_DIR \
   --output_dir=$FINE_TUNING_MODEL_DIR \
   --model_save_path=$FINETUNE_MODEL_PATH \
@@ -56,6 +56,5 @@ nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
   --learning_rate=5e-5 \
   --weight_decay=0.01 \
   --warmup_ratio=0.1 \
-  --num_beams=1 \
   --seed=42 \
   > $LOG_FILE 2>&1 &
