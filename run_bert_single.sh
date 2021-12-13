@@ -29,13 +29,7 @@ TEST_DATA_PATH=$FORMAT_DATA_DIR/aishell_test.txt
 # 日志
 LOG_FILE=$LOG_DIR/train_single_bert_log.txt
 
-# 使用DDP, 16GB显存不够无法启动
-# /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib \
-# /ssd1/users/fangzheng/3.6.5/bin/python -m torch.distributed.launch --nproc_per_node 1 ./run_model/run_bart_correction.py \ 
-
-nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-/opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-/ssd1/users/fangzheng/anaconda3/bin/python -u run_model/run_bert_single_correction.py \
+nohup python -u run_model/run_bert_single_correction.py \
   --do_train \
   --pretrain_model_path=$PRE_TRAINED_MODEL_DIR \
   --output_dir=$FINE_TUNING_MODEL_DIR \

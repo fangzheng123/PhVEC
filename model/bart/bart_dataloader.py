@@ -37,8 +37,8 @@ class BARTDataLoader(object):
                     item["transcript"], truncation=True, padding="max_length", max_length=self.args.max_output_len)
 
             # If we are padding here, replace all tokenizer.pad_token_id in the labels by -100 when we want to ignore padding in the loss.
-            if self.args.ignore_pad_token_for_loss:
-                transcript_label["input_ids"] = [[(l if l != self.bart_tokenizer.pad_token_id else -100) for l in label] for label in transcript_label["input_ids"]]
+            # if self.args.ignore_pad_token_for_loss:
+            #     transcript_label["input_ids"] = [[(l if l != self.bart_tokenizer.pad_token_id else -100) for l in label] for label in transcript_label["input_ids"]]
 
             asr_input["labels"] = transcript_label["input_ids"]
             return asr_input

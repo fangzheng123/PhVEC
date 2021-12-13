@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../../MTError")
+sys.path.append("../../PhVEC")
 
 from transformers import (
     BertTokenizer
@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
     fair_process = FairseqProcess()
     fair_process.format_data(source_path, pretrain_dir, asr_path, transcript_path, is_bstc=False)
-    # fair_process.get_cer_result("/ssd1/users/fangzheng/project/MTError/log/fairseq_levt_transformer_test_log2.txt", is_variable=True)
+    # fair_process.get_cer_result("/ssd1/users/fangzheng/project/PhVEC/log/fairseq_levt_transformer_test_log2.txt", is_variable=True)
         
 
         

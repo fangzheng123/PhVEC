@@ -46,9 +46,7 @@ mkdir -p log
 for element in `ls $raw_dir | grep ${data_type}_`
 do
     echo $raw_dir/$element
-    nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-    /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-    /ssd1/users/fangzheng/anaconda3/bin/python -u espnet/asr_process.py \
+    nohup python -u espnet/asr_process.py \
     --pre_train_model_path=$PRE_TRAIN_ASR_MODEL_PATH \
     --cache_dir=$CACHE_DIR \
     --wav_data_dir=$raw_dir/$element \
@@ -60,9 +58,7 @@ done
 # for element in {a,b,c,d,e,f}
 # do
 #     echo $raw_dir/$element
-#     nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-#     /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-#     /ssd1/users/fangzheng/anaconda3/bin/python -u espnet/asr_process.py \
+#     nohup python -u espnet/asr_process.py \
 #     --wav_data_dir=$raw_dir/$element \
 #     --asr_result_dir=$result_dir \
 #     > log/$element 2>&1 &

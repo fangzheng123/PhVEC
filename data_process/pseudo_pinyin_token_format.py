@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../../MTError")
+sys.path.append("../../PhVEC")
 
 import re
 import json

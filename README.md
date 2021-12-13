@@ -85,8 +85,6 @@ python pseudo_data_format.py (推荐nohup运行)
 ```
 
 
-
-
 ## 模型训练及测试
 ### 1.PhVEC模型
 ```shell
@@ -165,13 +163,9 @@ sh run_fairseq_levt_transformer.sh
 参数均可使用默认值，具体配置可参考fairseq，数据预处理同模型4
 ```
 
-### 6.mBART模型
+### 6.BART模型
 ```shell
 sh run_bart.sh
-```
-
-```text
-模型参数同1, 由于mBART是12层Encoder+12层Decoder，16GB GPU batch_size最大设置不超过4
 ```
 
 ### 7.BERT+完整拼音token模型

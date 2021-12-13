@@ -90,7 +90,7 @@ class BERTJointProcess(object):
                 
                 detect_loss = self.loss_fn(detect_logits.reshape(-1, detect_logits.shape[-1]), batch_data["detect_labels"].reshape(-1))
                 correct_loss = self.loss_fn(correct_logits.reshape(-1, correct_logits.shape[-1]), batch_data["correct_labels"].reshape(-1))
-                loss = detect_loss + correct_loss
+                loss = 0.8 * detect_loss + 0.2 * correct_loss
                 loss.backward()
                 # self.accelerator.backward(loss)
                 optimizer.step()
@@ -277,12 +277,11 @@ class BERTJointProcess(object):
         # 计算CER
         cer_score = ASRScoreUtil.calculate_cer(all_pred_list, all_label_list)
 
-        len_list = []
-        for pred, label in zip(all_pred_list, all_label_list):
-            len_list.append(abs(len(pred)-len(label)))
-
-        print(sum(len_list)/len(len_list))
-        print(len([ele for ele in len_list if ele == 0]), len([ele for ele in len_list if ele == 0])/len(len_list))
+        # len_list = []
+        # for pred, label in zip(all_pred_list, all_label_list):
+        #     len_list.append(abs(len(pred)-len(label)))
+        # print(sum(len_list)/len(len_list))
+        # print(len([ele for ele in len_list if ele == 0]), len([ele for ele in len_list if ele == 0])/len(len_list))
 
         # 保存打印结果
         # if not self.args.do_train

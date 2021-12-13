@@ -13,9 +13,7 @@ mkdir -p $LOG_DIR
 
 # 数据预处理
 # LOG_FILE=$LOG_DIR/fair_preprocess
-# nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-# /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-# /ssd1/users/fangzheng/anaconda3/bin/python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/preprocess.py \
+# nohup python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/preprocess.py \
 #     --source-lang zh \
 #     --target-lang en \
 #     --joined-dictionary \
@@ -28,9 +26,7 @@ mkdir -p $LOG_DIR
 
 # 模型训练
 # LEVT_TRANSFORMER_TRAIN_LOG_FILE=$LOG_DIR/fairseq_levt_transformer_bstc_train_log.txt
-# nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-# /opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-# /ssd1/users/fangzheng/anaconda3/bin/python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/train.py \
+# nohup python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/train.py \
 #     $DATA_DIR/data-bin \
 #     --arch levenshtein_transformer \
 #     --task translation_lev \
@@ -67,9 +63,7 @@ mkdir -p $LOG_DIR
 # 模型预测
 LEVT_TRANSFORMER_TEST_LOG_FILE=$LOG_DIR/fairseq_levt_transformer_test_log2.txt
 
-nohup /opt/compiler/gcc-8.2/lib/ld-linux-x86-64.so.2 --library-path \
-/opt/compiler/gcc-8.2/lib:/ssd1/users/fangzheng/anaconda3/lib:/usr/lib64:$LD_LIBRARY_PATH \
-/ssd1/users/fangzheng/anaconda3/bin/python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/generate.py \
+nohup python -u /ssd1/users/fangzheng/project/fairseq-0.10.2/fairseq_cli/generate.py \
     $DATA_DIR/data-bin \
     --task translation_lev \
     --iter-decode-max-iter 1 \

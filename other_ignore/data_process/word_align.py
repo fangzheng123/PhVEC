@@ -6,7 +6,7 @@
 @Contact :   fangzheng01@baidu.com
 '''
 import sys
-sys.path.append("../../MTError")
+sys.path.append("../../PhVEC")
 
 import json
 import math

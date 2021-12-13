@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../MTError")
+sys.path.append("../PhVEC")
 
 import torch
 from datasets import load_dataset
@@ -104,7 +104,6 @@ if __name__ == "__main__":
     # os.environ ['VECLIB_MAXIMUM_THREADS'] = str(cpu_num)
     # os.environ ['NUMEXPR_NUM_THREADS'] = str(cpu_num)
     # torch.set_num_threads(cpu_num)
-
 
     # 初始化huggingface ArgumentParser, 将包含自定义和公用的参数
     args = HfArgumentParser(BERTArguments).parse_args_into_dataclasses()[0]

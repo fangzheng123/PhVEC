@@ -182,9 +182,9 @@ class BERTJointDataLoader(object):
 
         # 构建不同格式数据
         if is_train:
-            dataset = dataset.map(tokenize_train_item_func,remove_columns=source_column_names, num_proc=self.args.dataloader_proc_num)
+            dataset = dataset.map(tokenize_train_item_func, remove_columns=source_column_names, num_proc=self.args.dataloader_proc_num)
         else:
-            dataset = dataset.map(tokenize_test_item_func,remove_columns=source_column_names, num_proc=self.args.dataloader_proc_num)
+            dataset = dataset.map(tokenize_test_item_func, remove_columns=source_column_names, num_proc=self.args.dataloader_proc_num)
 
         dataset.set_format(type="torch")
 

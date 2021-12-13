@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../../MTError")
+sys.path.append("../../PhVEC")
 
 import re
 from pypinyin import lazy_pinyin, pinyin, Style

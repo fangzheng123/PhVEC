@@ -7,21 +7,19 @@
 '''
 
 import sys
-sys.path.append("../MTError")
+sys.path.append("../PhVEC")
 
-from datasets import load_dataset
 from transformers import (
     set_seed,
     HfArgumentParser,
-    MBartTokenizer,
-    MBartForConditionalGeneration
+    BertTokenizer,
+    BartForConditionalGeneration
 )
 
 from util.arg_util import BARTArguments
 from util.log_util import LogUtil
-from model.mbart.bart_dataloader import BARTDataLoader
-from model.mbart.bart import BARTModel
-from model.mbart.bart_process import BARTProcess
+from model.bart.bart_dataloader import BARTDataLoader
+from model.bart.bart_process import BARTProcess
 
 class BARTCorrection(object):
     """
@@ -30,11 +28,10 @@ class BARTCorrection(object):
     def __init__(self, args):
         self.args = args
 
-        self.bart_tokenizer = MBartTokenizer.from_pretrained(self.args.pretrain_model_path, src_lang="zh_CN", tgt_lang="zh_CN")
-        self.bart_dataloader = BARTDataLoader(self.args, self.bart_tokenizer)
-        # self.bart_model = MBartForConditionalGeneration.from_pretrained(args.pretrain_model_path)
-        self.bart_model = BARTModel(self.args)
-        self.bart_process = BARTProcess(self.args, self.bart_model, self.bart_tokenizer)
+        self.bert_tokenizer = BertTokenizer.from_pretrained(self.args.pretrain_model_path)
+        self.bart_dataloader = BARTDataLoader(self.args, self.bert_tokenizer)
+        self.bart_model = BartForConditionalGeneration.from_pretrained(args.pretrain_model_path)
+        self.bart_process = BARTProcess(self.args, self.bart_model, self.bert_tokenizer)
 
     def train(self):
         """

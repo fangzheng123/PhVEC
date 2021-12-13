@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../../MTError")
+sys.path.append("../../PhVEC")
 
 
 from util.file_util import FileUtil

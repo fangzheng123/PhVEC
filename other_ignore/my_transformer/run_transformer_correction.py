@@ -7,7 +7,7 @@
 '''
 
 import sys
-sys.path.append("../MTError")
+sys.path.append("../PhVEC")
 
 from datasets import load_dataset
 from transformers import (
